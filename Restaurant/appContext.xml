@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations" value="properties.file"/>
+    </bean>
+    
+ 
+ <!--	
+	<bean name="restaurant" class="com.mms.one.Restaurant.Mcd">
+	<property name="restaurantService" ref="restaurantService"/>
+	</bean>
+	
+	<bean name="restaurantService" class="com.mms.one.Service.McdService">
+	<property name="restaurantFood" ref="restaurantFood"/>
+	</bean>
+	
+	 <bean name="restaurantFood" class="com.mms.one.dao.McdFood">
+	<property name="foodItems">
+	<map>
+	<entry key="1" value="McChicken"/>
+	<entry key="2" value="Fries"/>
+	<entry key="3" value="Hashbrown"/>
+	</map>
+	</property>
+	</bean> 
+	
+	
+	 <bean name="restaurant" class="com.mms.one.Restaurant.Taco">
+	<property name="restaurantService" ref="restaurantService"/>
+	</bean>
+	
+	
+	<bean name="restaurantService" class="com.mms.one.Service.TacoService">
+	<property name="restaurantFood" ref="restaurantFood"/>
+	
+	</bean> <bean name="restaurantFood" class="com.mms.one.dao.TacoFood">
+	<property name="foodItemList">
+	<list>
+	<value>burrito</value>
+	<value>potato griller</value>
+	<value>chicken griller</value>
+	</list>
+	</property>
+	</bean> 
+	
+	
+	 <bean name="restaurant" class="com.mms.one.Restaurant.Kfc">
+	<property name="restaurantService" ref="restaurantService"/>
+	</bean>
+	
+	
+	<bean name="restaurantService" class="com.mms.one.Service.KfcService">
+	<property name="restaurantFood" ref="restaurantFood"/>
+	</bean> 
+	
+	<bean name="restaurantFood" class="com.mms.one.dao.KfcFood">
+	<property name="foodItemList" value= "${list.of.Items}"/>
+	</bean> -->
+	
+	  <bean name="McdMenu" class="db.dao.imp.SpringHibernateImp"/>
+	  
+   <bean id="dataSource" destroy-method="close"
+        class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="${jdbc.driverClassName}"/>
+    <property name="url" value="${jdbc.url}"/>
+    <property name="username" value="${jdbc.username}"/>
+    <property name="password" value="${jdbc.password}"/>
+	</bean>
+    
+     <bean id="mySessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="DataSource"/>
+        <property name="mappingResources">
+            <list>
+                <value>product.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.MySQLDialect
+            </value>
+        </property>
+    </bean>
+    
+    <bean id="mcdMenuDao" class="db.dao.imp.McdImpDao"> 
+    <property name="dataSource" ref="dataSource"></property>
+    </bean>
+ 
+</beans>
